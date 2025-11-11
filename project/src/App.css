@@ -1,38 +1,628 @@
-.App {
-  text-align: center;
+/* src/styles.css */
+
+/* --- 1. 기본 설정 및 폰트 --- */
+:root {
+  --primary-color: #4A90E2; /* 메인 파란색 (대학교/스마트함 상징) */
+  --secondary-color: #F5A623; /* 강조 색상 */
+  --background-color: #F7F8F9; /* 연한 배경색 */
+  --card-background: #FFFFFF; /* 카드 배경 */
+  --text-color: #333333;
+  --border-color: #E0E0E0;
+  --danger-color: #D0021B;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1, h2, h3 {
+  color: var(--text-color);
+  margin-top: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* --- 2. 버튼 기본 스타일 --- */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #3A7CC6;
+}
+
+.btn-secondary {
+  background-color: var(--border-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: #DCDCDC;
+}
+
+.btn-comment {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+/* --- 3. 입력 필드 및 폼 스타일 --- */
+input[type="text"], 
+input[type="email"], 
+input[type="password"],
+textarea,
+select { /* select 태그 추가 */
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* --- 4. 인증 페이지 (SignInPage, SignUpPage) --- */
+.signin-page, .signup-page {
+  position: relative; /* 자식 요소인 버튼의 absolute 기준점 설정 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.signin-form, .signup-form {
+  background: var(--card-background);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.error-message {
+  color: var(--danger-color);
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* ✅ 뒤로가기 버튼 스타일 (추가됨) */
+.btn-back-auth {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: none;
+  border: none;
+  font-size: 30px; 
+  color: var(--text-color);
+  padding: 5px 10px;
+  cursor: pointer;
+  line-height: 1; 
+}
+.btn-back-auth:hover {
+  color: var(--primary-color);
+}
+
+
+/* --- 5. Navbar (랜딩 페이지 및 기본 네비게이션) --- */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo-link {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+}
+
+/* --- 6. Main Layout (MainPage) --- */
+.community-header {
+  display: flex;
+  /* 세 영역 (로고, 검색, 사용자 정보) 사이의 공간을 확보 */
+  justify-content: space-between; 
+  align-items: center;
+  padding: 15px 30px;
+  background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  /* 자식 요소 간의 기본 간격 설정 */
+  gap: 20px; 
+}
+.community-header h1 {
+  margin: 0;
+  font-size: 24px;
+  flex-shrink: 0; /* 로고는 축소되지 않음 */
+}
+
+/* ⭐ 검색 폼 스타일 (MainPage.js 인라인 스타일을 CSS로 통합) */
+.search-form {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* 중간 영역을 최대한 차지 */
+  max-width: 450px; 
+}
+.search-form input[type="text"] {
+  /* 인라인 스타일 통합 및 기본 input 스타일 재정의 */
+  padding: 8px 12px; 
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px; 
+  font-size: 14px; 
+  width: 250px; /* 고정 너비 지정 */
+  margin-bottom: 0; /* 기본 폼 스타일의 margin-bottom 제거 */
+}
+.search-form .btn-primary {
+  /* 인라인 스타일 통합 및 버튼 기본 스타일 재정의 */
+  padding: 8px 15px; 
+  border-radius: 0 4px 4px 0; 
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+
+/* ⭐ 사용자 정보 (환영 메시지 + 로그아웃 버튼) 컨테이너 */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* ⭐ 핵심: 이 컨테이너가 줄어들지 않도록 방지하여 버튼 보호 */
+  flex-shrink: 0; 
+  max-width: 40%; 
+}
+
+.user-info span {
+  /* ⭐ 핵심: 텍스트 넘침 방지 및 ... 표시 */
+  display: block; 
+  max-width: 200px; /* 메시지 텍스트의 최대 너비 제한 */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+/* 환영 메시지 내부의 마스터 표시 스타일 */
+.user-info span .master-tag {
+  color: var(--danger-color);
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.user-info .btn-secondary {
+  /* 버튼은 텍스트가 넘치지 않도록 flex-shrink: 0 속성을 상속받음 */
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+
+.content-wrapper {
+  display: flex;
+  min-height: calc(100vh - 70px); /* 헤더 높이 제외 */
+}
+
+.sidebar-nav {
+  width: 250px;
+  padding: 20px 0;
+  background-color: #F0F2F5; 
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+.sidebar-nav h3, .sidebar-nav h4 {
+  padding: 0 20px;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-nav li {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+.sidebar-nav .nav-link {
+  flex-grow: 1;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
+}
+.sidebar-nav li:hover .nav-link, 
+.sidebar-nav .nav-link.active {
+  background-color: #EAECEF;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+.delete-category-btn {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+  margin-left: 5px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+.delete-category-btn:hover {
+  opacity: 1;
+}
+
+.btn-write-post {
+  width: calc(100% - 40px);
+  margin: 15px 20px;
+  background-color: var(--primary-color);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* ⭐ 관리자 게시판 추가 UI 스타일 */
+.admin-category-add h4 {
+  font-size: 16px;
+  margin-top: 5px;
+}
+.admin-category-add input[type="text"] {
+  /* .user-info input과 구분하기 위해 재정의 */
+  width: calc(100% - 40px);
+  margin: 0 20px 10px;
+  padding: 8px 12px;
+  font-size: 14px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-content-area {
+  flex-grow: 1;
+  padding: 30px;
+}
+/* --- 6. Main Layout (MainPage) --- (끝) */
+/* --- 7. Post Item Card (Main1, Category1) --- */
+.post-list-container {
+  padding-top: 20px;
+}
+.post-item-card {
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.post-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.post-university {
+  font-size: 14px;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-right: 10px;
+}
+.post-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #888;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 50px;
+  color: #888;
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* --- 8. Post Detail Page (PostDetail) --- */
+.post-detail-page {
+  background-color: var(--card-background);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.post-meta-header {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.post-body {
+  white-space: pre-wrap;
+  font-size: 16px;
+  min-height: 100px;
+}
+
+/* 수정 모드 input/textarea */
+.edit-title-input {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 8px;
+}
+.edit-content-textarea {
+  min-height: 250px;
+  resize: vertical;
+}
+
+.post-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.btn-edit, .btn-save {
+  background-color: #5BC0DE;
+  color: white;
+}
+.btn-delete {
+  background-color: var(--danger-color);
+  color: white;
+}
+.btn-back {
+  margin-top: 30px;
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* 댓글 영역 */
+.comments-area {
+  margin-top: 30px;
+  padding-top: 20px;
+}
+.comment-item {
+  border-top: 1px solid var(--border-color);
+  padding: 15px 0;
+}
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.comment-author {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+.comment-time {
+  color: #999;
+}
+.comment-text {
+  margin: 5px 0;
+}
+.comment-actions button {
+  font-size: 11px;
+  padding: 4px 8px;
+  margin-left: 5px;
+  background: none;
+  border: 1px solid #CCC;
+  color: #666;
+  cursor: pointer;
+}
+.comment-edit-form {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.comment-edit-form textarea {
+  flex-grow: 1;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.comment-edit-form button {
+  height: 40px;
+  margin-top: auto;
+}
+
+.comment-form textarea {
+  min-height: 80px;
+  margin-bottom: 10px;
+}
+.comment-form .btn-comment {
+  float: right;
+}
+
+/* --- 9. Landing Page 전용 스타일 --- */
+
+.landing-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+}
+
+.landing-main-content {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #6AA6ED 100%);
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.hero-section h1 {
+  font-size: 3em;
+  margin-bottom: 15px;
+  color: white;
+}
+.hero-section p {
+  font-size: 1.3em;
+  opacity: 0.9;
+}
+
+.mini-main-section {
+  padding: 20px 0;
+}
+.mini-main-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.post-preview-card {
+  background: var(--card-background);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.landing-footer {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--card-background);
+  color: #888;
+  font-size: 14px;
+}
+
+/* src/styles.css (추가할 내용) */
+
+/* --- 10. Summary Section 스타일 (추가됨) --- */
+
+.summary-section {
+  padding: 60px 0;
+  text-align: center;
+  background-color: var(--card-background); /* 흰색 배경 */
+  border-radius: 10px;
+  margin: 40px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.summary-section h2 {
+  font-size: 2em;
+  margin-bottom: 40px;
+  color: var(--primary-color);
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 40px;
+}
+
+.summary-card {
+  flex: 1;
+  max-width: 300px;
+  padding: 30px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.summary-icon {
+  font-size: 3em;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.summary-card h3 {
+  color: var(--text-color);
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+.summary-card p {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* --- 11. Category/PostCreate 전용 스타일 (추가) --- */
+
+/* ⭐ Category1.js 제목 및 삭제 버튼 행 스타일 */
+.category-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+.category-header-row h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+/* ⭐ Category1.js의 게시판 삭제 버튼 스타일 */
+.btn-delete-category {
+  background-color: var(--danger-color);
+  color: white;
+  padding: 8px 15px;
+  font-size: 13px;
+  margin-left: 20px;
+}
+.btn-delete-category:hover {
+  background-color: #A30115;
+}
+
+/* ⭐ PostCreate.js 폼 스타일 */
+.post-create-form select {
+  margin-bottom: 20px;
+  /* select 드롭다운이 다른 input/textarea와 동일한 크기와 모양을 갖도록 */
+  appearance: none; 
+  background: white url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right 10px center;
+  background-size: 16px;
+}
+.post-create-form textarea {
+  min-height: 200px;
+}
+.post-create-form .form-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
